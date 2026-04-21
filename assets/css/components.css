@@ -1,5 +1,5 @@
 .brand {
-    display: inline-flex;
+    display: none;
     align-items: center;
     color: var(--accent-color);
     text-decoration: none;
@@ -14,9 +14,9 @@
     display: inline-flex;
 }
 
-.brand-text {
-    font-weight: 700;
-    font-size: 1.05rem;
+.custom-logo-link img {
+    max-width: 70px;
+    max-height: 70px;
 }
 
 .header-actions {
@@ -200,6 +200,7 @@
     margin-left: auto;
     display: block;
     cursor: pointer;
+    padding: 0;
 }
 
 .mobile-nav .menu {
