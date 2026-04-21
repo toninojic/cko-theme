@@ -1,73 +1,74 @@
 # CKO Theme Boilerplate
 
-Modern WordPress theme boilerplate with MVC-inspired architecture and modular CSS/JS.
+Modern WordPress theme boilerplate sa čistom podelom Page/Blog logike, modularnim CSS/JS i SR/EN osnovom.
 
-## File Structure
+## Ključne funkcionalnosti
 
+- **Custom logo support** (WordPress standard).
+- **Page sadržaj iz editora** za O nama / Underground / Kontakt.
+- **Blog listing** samo kroz `home.php` / `archive.php`.
+- **Shortcode** `[cko_latest_news]` sa 6 latest post kartica + **Load More (AJAX)**.
+- **Automatska anchor navigacija** na stranicama `o-nama` i `underground` (na osnovu `h2` naslova u sadržaju).
+- **SR/EN toggle** sa logikom povezivanja stranica.
+
+## Template hijerarhija
+
+- `front-page.php` => prikazuje sadržaj statične početne stranice (`the_content`).
+- `page.php` => obične statične stranice (`the_content`).
+- `home.php` + `archive.php` => blog/latest posts listing.
+- `single.php` => pojedinačna vest/post.
+
+## Kako koristiti logo
+
+1. Idi u **Appearance → Customize → Site Identity**.
+2. Uploadaj ili promeni logo u polju **Logo**.
+3. Header automatski prikazuje custom logo, a ako nije setovan prikazuje ime sajta.
+
+## Kako koristiti shortcode za najnovije vesti
+
+U editoru stranice (npr. Vesti) ubaci:
+
+```text
+[cko_latest_news]
 ```
-cko-theme/
-├── assets/
-│   ├── css/
-│   │   ├── base.css
-│   │   ├── layout.css
-│   │   ├── components.css
-│   │   └── pages.css
-│   └── js/
-│       └── theme.js
-├── controllers/
-├── models/
-├── views/
-│   └── page-templates/
-├── functions.php
-├── front-page.php
-├── page.php
-├── home.php
-├── archive.php
-└── single.php
+
+Opcioni parametar:
+
+```text
+[cko_latest_news posts_per_page="6"]
 ```
 
-## Template Logic (Page vs Blog)
+Shortcode prikazuje:
+- featured image
+- naslov
+- excerpt
+- link na ceo post
+- Load More dugme (AJAX, bez reload-a cele stranice)
 
-- `front-page.php` renders **page content** (`the_content`) for your static homepage (e.g. **O nama**).
-- `page.php` renders **page content** for normal static pages (Underground, Kontakt, etc.).
-- `home.php` and `archive.php` render blog post listings (latest posts loop).
-- `single.php` renders single blog posts.
+## Anchor navigacija (O nama / Underground)
 
-This keeps static pages separate from blog logic.
+- U sadržaju stranice koristi `h2` naslove za sekcije (npr. „Ko smo mi?“, „Naša misija“...).
+- Tema automatski pravi internu navigaciju na vrhu sadržaja i linkuje ka tim sekcijama.
+- Radi na slugovima: `o-nama`, `underground` (i EN varijantama sa `-en`).
 
-## Language Toggle (SR / EN)
+## SR/EN povezivanje stranica
 
-- Header includes an SR/EN toggle.
-- Toggle supports manual mapping via page custom field:
-  - `cko_alt_lang_page_id` = ID of translated counterpart page.
-- If mapping is not set, fallback is:
-  - SR page -> `/english/`
-  - EN page -> `/`
+Preporučeni način:
 
-## Content Management Guide
+1. Napravi SR i EN verziju stranice (npr. `o-nama` i `o-nama-en`).
+2. U svakoj stranici dodaj custom field: `cko_alt_lang_page_id`.
+3. Vrednost je ID odgovarajuće stranice na drugom jeziku.
 
-### O nama (front page)
-1. Create/edit **O nama** in **Pages → All Pages**.
-2. Add content with Gutenberg in page editor.
-3. Set as homepage in **Settings → Reading → Your homepage displays → A static page**.
+Fallback logika:
+- Ako custom field nije setovan, tema pokušava preko slug konvencije (`-en`).
+- Ako ni to ne postoji, koristi `/english/` ili `/`.
 
-### Underground
-1. Edit **Underground** in **Pages → All Pages**.
-2. Content is taken from page editor (`the_content`).
-3. No automatic latest-posts output on this page by default.
+## Gde se šta menja u administraciji
 
-### Kontakt
-1. Edit **Kontakt** in **Pages → All Pages**.
-2. Content is taken from page editor (`the_content`).
-3. No blog loop logic on this page.
-
-### Blog / Vesti
-1. Create/edit posts in **Posts → Add New**.
-2. Set **Vesti** page as posts page in **Settings → Reading**.
-3. Latest posts show only in blog templates (`home.php`, archives).
-
-### English pages
-1. Create English counterpart page in **Pages → Add New** (example: `english`, `about-en`, etc.).
-2. In each SR/EN page, set custom field `cko_alt_lang_page_id` to the other page’s ID.
-3. Header toggle will switch between mapped pages.
-
+- **Pages**: O nama, Underground, Kontakt, English sadržaj.
+- **Posts**: Vesti/blog postovi.
+- **Settings → Reading**:
+  - Homepage (front page)
+  - Posts page (Vesti/blog)
+- **Appearance → Menus**: glavni meni.
+- **Appearance → Customize → Site Identity**: logo.

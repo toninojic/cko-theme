@@ -33,6 +33,15 @@ if ( ! function_exists( 'cko_enqueue_assets' ) ) {
 			CKO_THEME_VERSION,
 			true
 		);
+
+		wp_localize_script(
+			'cko-theme-js',
+			'ckoTheme',
+			array(
+				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+				'nonce'   => wp_create_nonce( 'cko_load_more_posts' ),
+			)
+		);
 	}
 }
 add_action( 'wp_enqueue_scripts', 'cko_enqueue_assets' );

@@ -17,7 +17,13 @@ $lang_toggle = cko_get_language_toggle();
 <?php wp_body_open(); ?>
 <header class="site-header">
 	<div class="container header-inner">
-		<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo( 'name' ); ?></a>
+		<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+			<?php if ( has_custom_logo() ) : ?>
+				<?php the_custom_logo(); ?>
+			<?php else : ?>
+				<span class="brand-text"><?php bloginfo( 'name' ); ?></span>
+			<?php endif; ?>
+		</a>
 
 		<div class="header-actions">
 			<nav class="primary-nav desktop-nav" aria-label="<?php esc_attr_e( 'Primary Navigation', 'cko-theme' ); ?>">
@@ -47,6 +53,7 @@ $lang_toggle = cko_get_language_toggle();
 
 <div class="nav-overlay" aria-hidden="true"></div>
 <aside id="mobile-drawer" class="mobile-drawer" aria-hidden="true">
+	<button class="mobile-drawer-close" type="button" aria-label="<?php esc_attr_e( 'Close menu', 'cko-theme' ); ?>">×</button>
 	<nav class="primary-nav mobile-nav" aria-label="<?php esc_attr_e( 'Mobile Navigation', 'cko-theme' ); ?>">
 		<?php
 		wp_nav_menu(

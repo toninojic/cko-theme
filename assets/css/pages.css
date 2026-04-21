@@ -19,20 +19,28 @@
 
 .wp-block-button__link,
 button,
-input[type="submit"] {
+input[type="submit"],
+.cko-load-more {
     background: var(--primary-color);
     color: #fff;
     border: none;
     border-radius: 10px;
     padding: 0.7rem 1rem;
-    transition: transform var(--transition-base), background var(--transition-base);
+    transition: transform var(--transition-base), background var(--transition-base), opacity var(--transition-base);
+    cursor: pointer;
 }
 
 .wp-block-button__link:hover,
 button:hover,
-input[type="submit"]:hover {
+input[type="submit"]:hover,
+.cko-load-more:hover {
     background: var(--accent-color);
     transform: scale(1.02);
+}
+
+.cko-load-more.is-loading {
+    opacity: 0.7;
+    pointer-events: none;
 }
 
 @media (max-width: 900px) {
@@ -61,7 +69,8 @@ input[type="submit"]:hover {
         display: none;
     }
 
-    .mobile-language-toggle {
+    .mobile-language-toggle,
+    .mobile-drawer-close {
         display: none;
     }
 }
