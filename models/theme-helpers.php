@@ -19,32 +19,74 @@ if ( ! function_exists( 'cko_primary_menu_fallback' ) ) {
 	}
 }
 
+if ( ! function_exists( 'cko_get_page_language' ) ) {
+	/**
+	 * Determine page language (sr/en).
+	 *
+	 * @param int $page_id Page ID.
+	 * @return string
+	 */
+	function cko_get_page_language( $page_id ) {
+		$meta_language = (string) get_post_meta( $page_id, 'cko_page_language', true );
+		if ( in_array( $meta_language, array( 'sr', 'en' ), true ) ) {
+			return $meta_language;
+		}
+
+		$alt_page_id = absint( get_post_meta( $page_id, 'cko_alt_lang_page_id', true ) );
+		if ( $alt_page_id ) {
+			$alt_language = (string) get_post_meta( $alt_page_id, 'cko_page_language', true );
+			if ( 'sr' === $alt_language ) {
+				return 'en';
+			}
+			if ( 'en' === $alt_language ) {
+				return 'sr';
+			}
+		}
+
+		$linked_page = get_posts(
+			array(
+				'post_type'      => 'page',
+				'posts_per_page' => 1,
+				'post_status'    => array( 'publish', 'draft', 'private' ),
+				'meta_query'     => array(
+					array(
+						'key'   => 'cko_alt_lang_page_id',
+						'value' => $page_id,
+					),
+				),
+			)
+		);
+
+		if ( ! empty( $linked_page ) ) {
+			$linked_language = (string) get_post_meta( $linked_page[0]->ID, 'cko_page_language', true );
+			if ( 'sr' === $linked_language ) {
+				return 'en';
+			}
+			if ( 'en' === $linked_language ) {
+				return 'sr';
+			}
+		}
+
+		$slug       = (string) get_post_field( 'post_name', $page_id );
+		$template   = (string) get_page_template_slug( $page_id );
+		$slug_is_en = 'english' === $slug || false !== strpos( $slug, '-en' );
+		if ( 'template-english.php' === $template || $slug_is_en ) {
+			return 'en';
+		}
+
+		return 'sr';
+	}
+}
+
 if ( ! function_exists( 'cko_is_english_context' ) ) {
 	/**
 	 * Detect if current context is English variant.
-	 *
-	 * SR is default unless an EN-specific marker exists.
 	 *
 	 * @return bool
 	 */
 	function cko_is_english_context() {
 		if ( is_page() ) {
-			$page_id        = get_queried_object_id();
-			$meta_language  = (string) get_post_meta( $page_id, 'cko_page_language', true );
-			if ( 'en' === $meta_language ) {
-				return true;
-			}
-			if ( 'sr' === $meta_language ) {
-				return false;
-			}
-
-			$slug       = (string) get_post_field( 'post_name', $page_id );
-			$template   = (string) get_page_template_slug( $page_id );
-			$slug_is_en = 'english' === $slug || false !== strpos( $slug, '-en' );
-
-			if ( 'template-english.php' === $template || $slug_is_en ) {
-				return true;
-			}
+			return 'en' === cko_get_page_language( get_queried_object_id() );
 		}
 
 		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
@@ -54,35 +96,9 @@ if ( ! function_exists( 'cko_is_english_context' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cko_guess_alt_language_page_id' ) ) {
-	/**
-	 * Try guessing opposite language page by slug convention.
-	 *
-	 * @param int  $page_id Page id.
-	 * @param bool $is_en Current language context.
-	 * @return int
-	 */
-	function cko_guess_alt_language_page_id( $page_id, $is_en ) {
-		$slug = (string) get_post_field( 'post_name', $page_id );
-		if ( ! $slug ) {
-			return 0;
-		}
-
-		$target_slug = $is_en ? preg_replace( '/-en$/', '', $slug ) : $slug . '-en';
-		if ( ! $target_slug ) {
-			return 0;
-		}
-
-		$target_page = get_page_by_path( $target_slug );
-		return $target_page instanceof WP_Post ? (int) $target_page->ID : 0;
-	}
-}
-
 if ( ! function_exists( 'cko_get_language_toggle' ) ) {
 	/**
 	 * Build language switch data.
-	 *
-	 * Uses page custom field `cko_alt_lang_page_id` for manual SR/EN mapping.
 	 *
 	 * @return array{current:string,target:string,url:string}
 	 */
