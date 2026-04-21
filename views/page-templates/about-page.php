@@ -20,7 +20,7 @@ $sections = isset( $args['sections'] ) ? $args['sections'] : array();
 </section>
 
 <?php foreach ( $sections as $section ) : ?>
-	<section id="<?php echo esc_attr( $section['id'] ); ?>" class="anchor-section">
+	<section id="<?php echo esc_attr( $section['id'] ); ?>" class="anchor-section reveal">
 		<div class="container">
 			<h2><?php echo esc_html( $section['title'] ); ?></h2>
 			<div class="wysiwyg">

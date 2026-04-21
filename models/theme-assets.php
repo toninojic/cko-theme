@@ -25,6 +25,14 @@ if ( ! function_exists( 'cko_enqueue_assets' ) ) {
 				CKO_THEME_VERSION
 			);
 		}
+
+		wp_enqueue_script(
+			'cko-theme-js',
+			CKO_THEME_URI . '/assets/js/theme.js',
+			array(),
+			CKO_THEME_VERSION,
+			true
+		);
 	}
 }
 add_action( 'wp_enqueue_scripts', 'cko_enqueue_assets' );

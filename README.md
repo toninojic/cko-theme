@@ -78,3 +78,12 @@ cko-theme/
 - Use **custom fields (native)** only for simple structured values (like the Underground static section).
 - Add **ACF** later when you need repeaters/flexible content or editor-friendly structured fields.
 
+
+## Design System Updates
+
+- Centralized color tokens in `assets/css/base.css`:
+  - `--primary-color: #8a6edd`
+  - `--secondary-color: #f3ebdd`
+  - `--accent-color: #472e57`
+- Mobile navigation now uses animated hamburger button + off-canvas drawer + overlay.
+- Added scroll reveal and subtle hover/microinteraction transitions for modern UX.

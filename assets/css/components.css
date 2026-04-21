@@ -1,14 +1,39 @@
+.brand {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--accent-color);
+}
+
 .menu {
     display: flex;
     list-style: none;
-    gap: 1rem;
+    gap: 1.2rem;
     margin: 0;
     padding: 0;
 }
 
 .menu a {
-    text-decoration: none;
-    color: var(--primary-color);
+    position: relative;
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+.menu a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 2px;
+    background: var(--primary-color);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition-base);
+}
+
+.menu a:hover::after,
+.menu a:focus-visible::after {
+    transform: scaleX(1);
 }
 
 .anchor-nav ul {
@@ -16,31 +41,143 @@
     flex-wrap: wrap;
     gap: 0.75rem;
     list-style: none;
-    padding: 1rem 0;
+    padding: 1rem 0 0;
+    margin: 0;
 }
 
 .anchor-nav a {
-    text-decoration: none;
-    border: 1px solid #e5e7eb;
-    padding: 0.4rem 0.7rem;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid rgba(138, 110, 221, 0.3);
+    color: var(--accent-color);
+    background: #fff;
+    padding: 0.45rem 0.85rem;
     border-radius: 999px;
+    transition: transform var(--transition-base), background var(--transition-base), color var(--transition-base);
+}
+
+.anchor-nav a:hover {
+    background: var(--primary-color);
+    color: #fff;
+    transform: translateY(-1px);
 }
 
 .anchor-section {
     padding: 4rem 0;
-    border-top: 1px solid #f0f0f0;
 }
 
 .card {
     background: var(--surface-color);
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
-    padding: 1.2rem;
+    border: 1px solid rgba(71, 46, 87, 0.12);
+    border-radius: var(--radius-md);
+    padding: 1.4rem;
+    box-shadow: var(--shadow-soft);
+}
+
+.post-card,
+.single-post,
+.contact-page,
+.underground-section {
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.post-card:hover,
+.single-post:hover,
+.contact-page:hover,
+.underground-section:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 35px rgba(71, 46, 87, 0.14);
 }
 
 .contact-placeholder {
-    border-top: 1px dashed #d1d5db;
+    border-top: 1px dashed rgba(71, 46, 87, 0.3);
     margin-top: 1rem;
     padding-top: 1rem;
     color: var(--muted-color);
+}
+
+.menu-toggle {
+    display: none;
+    width: 46px;
+    height: 46px;
+    border: 1px solid rgba(71, 46, 87, 0.2);
+    background: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--accent-color);
+    margin: 6px 0;
+    transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+.menu-toggle.is-active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle.is-active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.is-active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+.nav-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(24, 16, 31, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-base), visibility var(--transition-base);
+    z-index: 210;
+}
+
+.nav-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(84vw, 340px);
+    height: 100vh;
+    background: #fff;
+    border-left: 1px solid rgba(71, 46, 87, 0.14);
+    padding: 5.25rem 1.4rem 1.4rem;
+    transform: translateX(100%);
+    transition: transform var(--transition-base);
+    z-index: 220;
+}
+
+.mobile-drawer.is-open {
+    transform: translateX(0);
+}
+
+.mobile-nav .menu {
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.mobile-nav .menu a {
+    display: block;
+    padding: 0.5rem 0;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 600ms ease, transform 600ms cubic-bezier(0.2, 0.65, 0.2, 1);
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
 }

@@ -1,10 +1,14 @@
 :root {
-    --primary-color: #111827;
-    --secondary-color: #ffffff;
-    --accent-color: #ef4444;
-    --muted-color: #6b7280;
-    --surface-color: #f9fafb;
+    --primary-color: #8a6edd;
+    --secondary-color: #f3ebdd;
+    --accent-color: #472e57;
+    --text-color: #2a1f35;
+    --surface-color: #fffdf8;
+    --muted-color: #6f6480;
     --container-width: 1120px;
+    --radius-md: 14px;
+    --shadow-soft: 0 12px 30px rgba(71, 46, 87, 0.08);
+    --transition-base: 280ms cubic-bezier(0.2, 0.65, 0.2, 1);
 }
 
 * {
@@ -18,11 +22,30 @@ html {
 body {
     margin: 0;
     font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-    color: var(--primary-color);
-    background: var(--secondary-color);
-    line-height: 1.65;
+    color: var(--text-color);
+    background: linear-gradient(180deg, #ffffff 0%, var(--secondary-color) 100%);
+    line-height: 1.7;
+}
+
+body.menu-open {
+    overflow: hidden;
 }
 
 a {
-    color: inherit;
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color var(--transition-base);
+}
+
+a:hover {
+    color: var(--accent-color);
+}
+
+h1,
+h2,
+h3,
+h4 {
+    color: var(--accent-color);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
 }

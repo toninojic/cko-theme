@@ -12,7 +12,7 @@ $sections = isset( $args['sections'] ) ? $args['sections'] : array();
 <section class="container content-wrap">
 	<h1><?php the_title(); ?></h1>
 	<?php foreach ( $sections as $section ) : ?>
-		<section id="<?php echo esc_attr( $section['id'] ); ?>" class="underground-section card">
+		<section id="<?php echo esc_attr( $section['id'] ); ?>" class="underground-section card reveal">
 			<h2><?php echo esc_html( $section['label'] ); ?></h2>
 			<?php if ( 'posts' === $section['type'] ) : ?>
 				<?php
