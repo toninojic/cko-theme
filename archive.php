@@ -1,0 +1,10 @@
+<?php
+/**
+ * Archive template.
+ *
+ * @package CkoTheme
+ */
+
+get_header();
+cko_render_post_list();
+get_footer();
