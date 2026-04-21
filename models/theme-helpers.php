@@ -67,7 +67,7 @@ if ( ! function_exists( 'cko_get_language_toggle' ) ) {
 	/**
 	 * Build language switch data.
 	 *
-	 * Uses page custom field `cko_alt_lang_page_id` (recommended) and slug fallback.
+	 * Uses page custom field `cko_alt_lang_page_id` for manual SR/EN mapping.
 	 *
 	 * @return array{current:string,target:string,url:string}
 	 */
@@ -80,11 +80,14 @@ if ( ! function_exists( 'cko_get_language_toggle' ) ) {
 		if ( is_page() ) {
 			$page_id     = get_queried_object_id();
 			$alt_page_id = absint( get_post_meta( $page_id, 'cko_alt_lang_page_id', true ) );
-			if ( ! $alt_page_id ) {
-				$alt_page_id = cko_guess_alt_language_page_id( $page_id, $is_en );
-			}
-			if ( $alt_page_id ) {
-				$url = get_permalink( $alt_page_id );
+
+			if ( $alt_page_id && 'page' === get_post_type( $alt_page_id ) ) {
+				$alt_url = get_permalink( $alt_page_id );
+				if ( $alt_url ) {
+					$url = $alt_url;
+				}
+			} else {
+				$url = get_permalink( $page_id );
 			}
 		}
 

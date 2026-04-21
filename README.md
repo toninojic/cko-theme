@@ -8,18 +8,25 @@ Modern NGO/nonprofit-ready WordPress boilerplate sa modularnom arhitekturom, mod
 - **Front page NGO struktura**: hero, impact blok, sadržaj sekcije, recent news, CTA band.
 - **`[cko_latest_news]` shortcode**: 6 latest postova, profesionalne kartice, responsive grid (3/2/1), AJAX Load More.
 - **Footer widget oblasti** (3 kolone) za tekst, linkove, kontakt i društvene mreže.
-- **SR/EN toggle** sa mapiranjem preko `cko_alt_lang_page_id` + slug fallback.
+- **SR/EN toggle** sa ručnim mapiranjem preko `cko_alt_lang_page_id` meta polja.
 
 ## Front page struktura i sadržaj
 
 `front-page.php` koristi `views/page-templates/front-page-ngo.php` i čita sledeće custom fields sa front page-a:
 
+- `cko_hero_kicker`
 - `cko_hero_title`
 - `cko_hero_text`
 - `cko_hero_cta_text`
 - `cko_hero_cta_url`
 - `cko_impact_title`
-- `cko_impact_items` (format po liniji: `broj|opis`, npr. `120+|Podržanih zajednica`)
+- `cko_impact_items` (strukturisane stavke: naslov, broj/highlight, opis, URL ikone)
+- `cko_recent_news_title`
+- `cko_recent_news_link_text`
+- `cko_cta_title`
+- `cko_cta_text`
+- `cko_cta_button_text`
+- `cko_cta_button_url`
 
 Hero slika se uzima iz **Featured Image** front page-a.
 
@@ -65,9 +72,8 @@ Tu možeš dodati tekst, custom HTML, Navigation Menu widget, social linkove itd
 
 Preporuka:
 1. Napravi SR i EN varijante stranica.
-2. U svakoj dodaj custom field `cko_alt_lang_page_id` sa ID-jem suprotne verzije.
-
-Ako nije postavljeno ručno, tema pokušava slug fallback (`-en`).
+2. U svakoj stranici, u meta boxu **CKO • Language Settings**, izaberi suprotnu jezičku stranicu u polju `cko_alt_lang_page_id`.
+3. Sačuvaj obe stranice (SR i EN) da bi povezivanje bilo dvosmerno.
 
 ## Gde kasnije menjaš sadržaj
 
