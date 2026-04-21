@@ -1,0 +1,38 @@
+.container {
+    width: min(100% - 2rem, var(--container-width));
+    margin-inline: auto;
+}
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--secondary-color);
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 0;
+}
+
+.site-main {
+    min-height: 80vh;
+}
+
+.content-wrap {
+    padding: 2.5rem 0;
+}
+
+.post-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.site-footer {
+    border-top: 1px solid #e5e7eb;
+    padding: 1.2rem 0;
+}

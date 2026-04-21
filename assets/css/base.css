@@ -1,0 +1,28 @@
+:root {
+    --primary-color: #111827;
+    --secondary-color: #ffffff;
+    --accent-color: #ef4444;
+    --muted-color: #6b7280;
+    --surface-color: #f9fafb;
+    --container-width: 1120px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    color: var(--primary-color);
+    background: var(--secondary-color);
+    line-height: 1.65;
+}
+
+a {
+    color: inherit;
+}
