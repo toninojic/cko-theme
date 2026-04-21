@@ -20,7 +20,7 @@ Modern NGO/nonprofit-ready WordPress boilerplate sa modularnom arhitekturom, mod
 - `cko_hero_cta_text`
 - `cko_hero_cta_url`
 - `cko_impact_title`
-- `cko_impact_items` (tačno 4 strukturisane kartice: naslov, broj/highlight, opis, URL ikone)
+- `cko_impact_items` (tačno 3 strukturisane kartice: naslov, broj/highlight, opis, URL ikone)
 - `cko_recent_news_title`
 - `cko_recent_news_link_text`
 - `cko_cta_title`
@@ -72,8 +72,9 @@ Tu možeš dodati tekst, custom HTML, Navigation Menu widget, social linkove itd
 
 Preporuka:
 1. Napravi SR i EN varijante stranica.
-2. U svakoj stranici, u meta boxu **CKO • Language Settings**, izaberi suprotnu jezičku stranicu u polju `cko_alt_lang_page_id`.
-3. Sačuvaj obe stranice (SR i EN) da bi povezivanje bilo dvosmerno.
+2. U svakoj stranici, u meta boxu **CKO • Language Settings**, postavi `Current page language` (SR ili EN).
+3. U istoj sekciji izaberi suprotnu jezičku stranicu u polju `cko_alt_lang_page_id`.
+4. Sačuvaj obe stranice (SR i EN) da bi povezivanje bilo dvosmerno.
 
 SR je podrazumevani kontekst; EN se aktivira samo na EN markerima (English template, `-en`/`english` slug ili `/en`/`/english` putanja).
 

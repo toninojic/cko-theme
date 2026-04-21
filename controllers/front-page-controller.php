@@ -36,15 +36,9 @@ if ( ! function_exists( 'cko_get_front_page_data' ) ) {
 				'description' => __( 'Organizacije sa kojima gradimo dugoročan uticaj.', 'cko-theme' ),
 				'icon'        => '',
 			),
-			array(
-				'title'       => __( 'Volonteri i aktivisti', 'cko-theme' ),
-				'value'       => '250+',
-				'description' => __( 'Ljudi koji aktivno učestvuju u programima i kampanjama.', 'cko-theme' ),
-				'icon'        => '',
-			),
 		);
 
-		for ( $index = 0; $index < 4; $index++ ) {
+		for ( $index = 0; $index < 3; $index++ ) {
 			$item = isset( $impact_items[ $index ] ) && is_array( $impact_items[ $index ] ) ? $impact_items[ $index ] : array();
 			$impact_items[ $index ] = array(
 				'title'       => isset( $item['title'] ) && '' !== $item['title'] ? $item['title'] : $impact_defaults[ $index ]['title'],

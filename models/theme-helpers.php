@@ -29,9 +29,17 @@ if ( ! function_exists( 'cko_is_english_context' ) ) {
 	 */
 	function cko_is_english_context() {
 		if ( is_page() ) {
-			$page_id   = get_queried_object_id();
-			$slug      = (string) get_post_field( 'post_name', $page_id );
-			$template  = (string) get_page_template_slug( $page_id );
+			$page_id        = get_queried_object_id();
+			$meta_language  = (string) get_post_meta( $page_id, 'cko_page_language', true );
+			if ( 'en' === $meta_language ) {
+				return true;
+			}
+			if ( 'sr' === $meta_language ) {
+				return false;
+			}
+
+			$slug       = (string) get_post_field( 'post_name', $page_id );
+			$template   = (string) get_page_template_slug( $page_id );
 			$slug_is_en = 'english' === $slug || false !== strpos( $slug, '-en' );
 
 			if ( 'template-english.php' === $template || $slug_is_en ) {

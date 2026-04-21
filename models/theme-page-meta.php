@@ -37,6 +37,12 @@ if ( ! function_exists( 'cko_render_language_settings_meta_box' ) ) {
 		);
 		?>
 		<p>
+			<label for="cko_page_language"><strong><?php esc_html_e( 'Current page language', 'cko-theme' ); ?></strong></label>
+			<?php $page_language = get_post_meta( $post->ID, 'cko_page_language', true ); ?>
+			<select id="cko_page_language" name="cko_page_language" class="widefat" style="margin-bottom:8px;">
+				<option value="sr" <?php selected( $page_language ? $page_language : 'sr', 'sr' ); ?>>SR</option>
+				<option value="en" <?php selected( $page_language, 'en' ); ?>>EN</option>
+			</select>
 			<label for="cko_alt_lang_page_id"><strong><?php esc_html_e( 'Alternative language page', 'cko-theme' ); ?></strong></label>
 			<select id="cko_alt_lang_page_id" name="cko_alt_lang_page_id" class="widefat">
 				<option value="0"><?php esc_html_e( '— Not linked —', 'cko-theme' ); ?></option>
@@ -103,7 +109,7 @@ if ( ! function_exists( 'cko_render_frontpage_content_meta_box' ) ) {
 
 if ( ! function_exists( 'cko_render_impact_items_meta_box' ) ) {
 	/**
-	 * Render fixed 4 impact items fields.
+	 * Render fixed 3 impact items fields.
 	 *
 	 * @param WP_Post $post Current post object.
 	 */
@@ -112,8 +118,8 @@ if ( ! function_exists( 'cko_render_impact_items_meta_box' ) ) {
 		$items = get_post_meta( $post->ID, 'cko_impact_items', true );
 		$items = is_array( $items ) ? array_values( $items ) : array();
 		?>
-		<p style="margin-top:0;"><?php esc_html_e( 'Unesite sadržaj za 4 impact kartice (naslov, broj/statistika, opis, opcioni URL ikonice).', 'cko-theme' ); ?></p>
-		<?php for ( $index = 0; $index < 4; $index++ ) : ?>
+		<p style="margin-top:0;"><?php esc_html_e( 'Unesite sadržaj za 3 impact kartice (naslov, broj/statistika, opis, opcioni URL ikonice).', 'cko-theme' ); ?></p>
+		<?php for ( $index = 0; $index < 3; $index++ ) : ?>
 			<?php $item = isset( $items[ $index ] ) && is_array( $items[ $index ] ) ? $items[ $index ] : array(); ?>
 			<div class="cko-impact-row" style="border:1px solid #ddd;padding:12px;margin-bottom:12px;">
 				<h4 style="margin:0 0 10px;"><?php echo esc_html( sprintf( __( 'Impact kartica %d', 'cko-theme' ), $index + 1 ) ); ?></h4>
@@ -145,6 +151,7 @@ if ( ! function_exists( 'cko_save_page_meta_fields' ) ) {
 		}
 
 		$scalar_fields = array(
+			'cko_page_language',
 			'cko_alt_lang_page_id', 'cko_hero_kicker', 'cko_hero_title', 'cko_hero_text', 'cko_hero_cta_text', 'cko_hero_cta_url',
 			'cko_impact_title', 'cko_recent_news_title', 'cko_recent_news_link_text', 'cko_cta_title', 'cko_cta_text',
 			'cko_cta_button_text', 'cko_cta_button_url',
@@ -154,7 +161,9 @@ if ( ! function_exists( 'cko_save_page_meta_fields' ) ) {
 				continue;
 			}
 			$raw = wp_unslash( $_POST[ $field_key ] );
-			if ( 'cko_alt_lang_page_id' === $field_key ) {
+			if ( 'cko_page_language' === $field_key ) {
+				$value = 'en' === $raw ? 'en' : 'sr';
+			} elseif ( 'cko_alt_lang_page_id' === $field_key ) {
 				$value = absint( $raw );
 			} elseif ( false !== strpos( $field_key, '_url' ) ) {
 				$value = esc_url_raw( $raw );
@@ -171,7 +180,7 @@ if ( ! function_exists( 'cko_save_page_meta_fields' ) ) {
 		if ( isset( $_POST['cko_impact_items'] ) && is_array( $_POST['cko_impact_items'] ) ) {
 			$raw_items = wp_unslash( $_POST['cko_impact_items'] );
 			$items     = array();
-			for ( $index = 0; $index < 4; $index++ ) {
+			for ( $index = 0; $index < 3; $index++ ) {
 				$item      = isset( $raw_items[ $index ] ) && is_array( $raw_items[ $index ] ) ? $raw_items[ $index ] : array();
 				$items[] = array(
 					'title'       => isset( $item['title'] ) ? sanitize_text_field( $item['title'] ) : '',
