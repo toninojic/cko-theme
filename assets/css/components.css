@@ -293,17 +293,20 @@
 .hero-cta {
     display: inline-flex;
     margin-top: 1rem;
-    background: var(--primary-color);
+    background: linear-gradient(135deg, #6b4dd8 0%, #8f5cff 45%, #37b5ff 100%);
+    background-size: 160% 160%;
     color: #fff;
     padding: 0.8rem 1.15rem;
     border-radius: 12px;
     font-weight: 600;
-    transition: transform var(--transition-base), background var(--transition-base);
+    box-shadow: 0 10px 24px rgba(73, 48, 134, 0.26);
+    transition: transform var(--transition-base), box-shadow var(--transition-base), background-position 0.35s ease;
 }
 
 .hero-cta:hover {
     transform: translateY(-2px);
-    background: var(--accent-color);
+    box-shadow: 0 14px 28px rgba(73, 48, 134, 0.34);
+    background-position: 100% 50%;
 }
 
 .impact-section {
