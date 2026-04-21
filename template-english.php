@@ -6,5 +6,5 @@
  */
 
 get_header();
-cko_render_about_page( 'en' );
+cko_render_page_content();
 get_footer();

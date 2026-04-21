@@ -4,6 +4,8 @@
  *
  * @package CkoTheme
  */
+
+$lang_toggle = cko_get_language_toggle();
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -17,17 +19,23 @@
 	<div class="container header-inner">
 		<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo( 'name' ); ?></a>
 
-		<nav class="primary-nav desktop-nav" aria-label="<?php esc_attr_e( 'Primary Navigation', 'cko-theme' ); ?>">
-			<?php
-			wp_nav_menu(
-				array(
-					'theme_location' => 'primary',
-					'container'      => false,
-					'fallback_cb'    => 'cko_primary_menu_fallback',
-				)
-			);
-			?>
-		</nav>
+		<div class="header-actions">
+			<nav class="primary-nav desktop-nav" aria-label="<?php esc_attr_e( 'Primary Navigation', 'cko-theme' ); ?>">
+				<?php
+				wp_nav_menu(
+					array(
+						'theme_location' => 'primary',
+						'container'      => false,
+						'fallback_cb'    => 'cko_primary_menu_fallback',
+					)
+				);
+				?>
+			</nav>
+			<a class="language-toggle" href="<?php echo esc_url( $lang_toggle['url'] ); ?>" aria-label="<?php echo esc_attr( sprintf( 'Switch language to %s', $lang_toggle['target'] ) ); ?>">
+				<span class="language-toggle__current"><?php echo esc_html( $lang_toggle['current'] ); ?></span>
+				<span class="language-toggle__target"><?php echo esc_html( $lang_toggle['target'] ); ?></span>
+			</a>
+		</div>
 
 		<button class="menu-toggle" type="button" aria-label="<?php esc_attr_e( 'Open menu', 'cko-theme' ); ?>" aria-expanded="false" aria-controls="mobile-drawer">
 			<span></span>
@@ -50,6 +58,10 @@
 		);
 		?>
 	</nav>
+	<a class="language-toggle mobile-language-toggle" href="<?php echo esc_url( $lang_toggle['url'] ); ?>">
+		<span class="language-toggle__current"><?php echo esc_html( $lang_toggle['current'] ); ?></span>
+		<span class="language-toggle__target"><?php echo esc_html( $lang_toggle['target'] ); ?></span>
+	</a>
 </aside>
 
 <main class="site-main">

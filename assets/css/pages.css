@@ -40,6 +40,14 @@ input[type="submit"]:hover {
         display: none;
     }
 
+    .header-actions {
+        margin-left: auto;
+    }
+
+    .language-toggle {
+        margin-right: 0.4rem;
+    }
+
     .menu-toggle {
         display: inline-flex;
         flex-direction: column;
@@ -50,6 +58,10 @@ input[type="submit"]:hover {
 @media (min-width: 901px) {
     .mobile-drawer,
     .nav-overlay {
+        display: none;
+    }
+
+    .mobile-language-toggle {
         display: none;
     }
 }

@@ -25,10 +25,9 @@ if ( ! function_exists( 'cko_render_contact_page' ) ) {
 
 if ( ! function_exists( 'cko_render_underground_page' ) ) {
 	/**
-	 * Render underground composite page.
+	 * Render underground as regular page content (content-first).
 	 */
 	function cko_render_underground_page() {
-		$sections = cko_get_underground_sections();
-		get_template_part( 'views/page-templates/underground-page', null, array( 'sections' => $sections ) );
+		get_template_part( 'views/page-templates/default-page' );
 	}
 }

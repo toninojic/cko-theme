@@ -6,5 +6,5 @@
  */
 
 get_header();
-cko_render_contact_page();
+cko_render_page_content();
 get_footer();

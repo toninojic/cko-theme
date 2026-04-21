@@ -1,10 +1,10 @@
 <?php
 /**
- * Front page template (O nama).
+ * Front page template.
  *
  * @package CkoTheme
  */
 
 get_header();
-cko_render_about_page( 'sr' );
+cko_render_page_content();
 get_footer();
