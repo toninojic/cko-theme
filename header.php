@@ -6,6 +6,7 @@
  */
 
 $lang_toggle = cko_get_language_toggle();
+$is_en_toggle = 'EN' === $lang_toggle['current'];
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -37,9 +38,9 @@ $lang_toggle = cko_get_language_toggle();
 				);
 				?>
 			</nav>
-			<a class="language-toggle" href="<?php echo esc_url( $lang_toggle['url'] ); ?>" aria-label="<?php echo esc_attr( sprintf( 'Switch language to %s', $lang_toggle['target'] ) ); ?>">
-				<span class="language-toggle__current is-active" aria-current="true"><?php echo esc_html( $lang_toggle['current'] ); ?></span>
-				<span class="language-toggle__target"><?php echo esc_html( $lang_toggle['target'] ); ?></span>
+			<a class="language-toggle <?php echo $is_en_toggle ? 'is-en' : 'is-sr'; ?>" href="<?php echo esc_url( $lang_toggle['url'] ); ?>" aria-label="<?php echo esc_attr( sprintf( 'Switch language to %s', $lang_toggle['target'] ) ); ?>">
+				<span class="language-toggle__option language-toggle__option--sr" <?php echo $is_en_toggle ? '' : 'aria-current="true"'; ?>>SR</span>
+				<span class="language-toggle__option language-toggle__option--en" <?php echo $is_en_toggle ? 'aria-current="true"' : ''; ?>>EN</span>
 			</a>
 		</div>
 
@@ -65,9 +66,9 @@ $lang_toggle = cko_get_language_toggle();
 		);
 		?>
 	</nav>
-	<a class="language-toggle mobile-language-toggle" href="<?php echo esc_url( $lang_toggle['url'] ); ?>" aria-label="<?php echo esc_attr( sprintf( 'Switch language to %s', $lang_toggle['target'] ) ); ?>">
-		<span class="language-toggle__current is-active" aria-current="true"><?php echo esc_html( $lang_toggle['current'] ); ?></span>
-		<span class="language-toggle__target"><?php echo esc_html( $lang_toggle['target'] ); ?></span>
+	<a class="language-toggle mobile-language-toggle <?php echo $is_en_toggle ? 'is-en' : 'is-sr'; ?>" href="<?php echo esc_url( $lang_toggle['url'] ); ?>" aria-label="<?php echo esc_attr( sprintf( 'Switch language to %s', $lang_toggle['target'] ) ); ?>">
+		<span class="language-toggle__option language-toggle__option--sr" <?php echo $is_en_toggle ? '' : 'aria-current="true"'; ?>>SR</span>
+		<span class="language-toggle__option language-toggle__option--en" <?php echo $is_en_toggle ? 'aria-current="true"' : ''; ?>>EN</span>
 	</a>
 </aside>
 
