@@ -15,7 +15,44 @@ if ( ! function_exists( 'cko_get_front_page_data' ) ) {
 		$page_id = get_queried_object_id();
 
 		$impact_items = get_post_meta( $page_id, 'cko_impact_items', true );
-		$impact_items = is_array( $impact_items ) ? $impact_items : array();
+		$impact_items = is_array( $impact_items ) ? array_values( $impact_items ) : array();
+
+		$impact_defaults = array(
+			array(
+				'title'       => __( 'Podržane zajednice', 'cko-theme' ),
+				'value'       => '120+',
+				'description' => __( 'Lokalne inicijative koje su dobile našu podršku.', 'cko-theme' ),
+				'icon'        => '',
+			),
+			array(
+				'title'       => __( 'Aktivni projekti', 'cko-theme' ),
+				'value'       => '35',
+				'description' => __( 'Programi koje trenutno realizujemo sa partnerima.', 'cko-theme' ),
+				'icon'        => '',
+			),
+			array(
+				'title'       => __( 'Partner organizacije', 'cko-theme' ),
+				'value'       => '18',
+				'description' => __( 'Organizacije sa kojima gradimo dugoročan uticaj.', 'cko-theme' ),
+				'icon'        => '',
+			),
+			array(
+				'title'       => __( 'Volonteri i aktivisti', 'cko-theme' ),
+				'value'       => '250+',
+				'description' => __( 'Ljudi koji aktivno učestvuju u programima i kampanjama.', 'cko-theme' ),
+				'icon'        => '',
+			),
+		);
+
+		for ( $index = 0; $index < 4; $index++ ) {
+			$item = isset( $impact_items[ $index ] ) && is_array( $impact_items[ $index ] ) ? $impact_items[ $index ] : array();
+			$impact_items[ $index ] = array(
+				'title'       => isset( $item['title'] ) && '' !== $item['title'] ? $item['title'] : $impact_defaults[ $index ]['title'],
+				'value'       => isset( $item['value'] ) && '' !== $item['value'] ? $item['value'] : $impact_defaults[ $index ]['value'],
+				'description' => isset( $item['description'] ) && '' !== $item['description'] ? $item['description'] : $impact_defaults[ $index ]['description'],
+				'icon'        => isset( $item['icon'] ) ? $item['icon'] : '',
+			);
+		}
 
 		return array(
 			'hero_kicker'            => get_post_meta( $page_id, 'cko_hero_kicker', true ) ?: __( 'Community • Impact • Action', 'cko-theme' ),

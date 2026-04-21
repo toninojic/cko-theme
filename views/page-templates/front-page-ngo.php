@@ -12,26 +12,7 @@ $front = isset( $args['front'] ) ? $args['front'] : array();
 $impact_items = ! empty( $front['impact_items'] ) && is_array( $front['impact_items'] ) ? $front['impact_items'] : array();
 
 if ( empty( $impact_items ) ) {
-	$impact_items = array(
-		array(
-			'title'       => __( 'Podržane zajednice', 'cko-theme' ),
-			'value'       => '120+',
-			'description' => __( 'Lokalne inicijative koje su dobile našu podršku.', 'cko-theme' ),
-			'icon'        => '',
-		),
-		array(
-			'title'       => __( 'Aktivni projekti', 'cko-theme' ),
-			'value'       => '35',
-			'description' => __( 'Programi koje trenutno realizujemo sa partnerima.', 'cko-theme' ),
-			'icon'        => '',
-		),
-		array(
-			'title'       => __( 'Partner organizacije', 'cko-theme' ),
-			'value'       => '18',
-			'description' => __( 'Organizacije sa kojima gradimo dugoročan uticaj.', 'cko-theme' ),
-			'icon'        => '',
-		),
-	);
+	$impact_items = array();
 }
 ?>
 <section class="hero-section reveal" style="<?php echo ! empty( $front['hero_image'] ) ? esc_attr( 'background-image:url(' . $front['hero_image'] . ');' ) : ''; ?>">

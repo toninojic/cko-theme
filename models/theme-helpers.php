@@ -23,19 +23,26 @@ if ( ! function_exists( 'cko_is_english_context' ) ) {
 	/**
 	 * Detect if current context is English variant.
 	 *
+	 * SR is default unless an EN-specific marker exists.
+	 *
 	 * @return bool
 	 */
 	function cko_is_english_context() {
 		if ( is_page() ) {
-			$slug            = (string) get_post_field( 'post_name', get_queried_object_id() );
-			$is_english_slug = false !== strpos( $slug, 'english' ) || '-en' === substr( $slug, -3 );
-			if ( $is_english_slug ) {
+			$page_id   = get_queried_object_id();
+			$slug      = (string) get_post_field( 'post_name', $page_id );
+			$template  = (string) get_page_template_slug( $page_id );
+			$slug_is_en = 'english' === $slug || false !== strpos( $slug, '-en' );
+
+			if ( 'template-english.php' === $template || $slug_is_en ) {
 				return true;
 			}
 		}
 
 		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
-		return 0 === strpos( trim( $request_uri, '/' ), 'en/' );
+		$path        = trim( (string) wp_parse_url( $request_uri, PHP_URL_PATH ), '/' );
+
+		return 'en' === $path || 0 === strpos( $path, 'en/' ) || 'english' === $path || 0 === strpos( $path, 'english/' );
 	}
 }
 

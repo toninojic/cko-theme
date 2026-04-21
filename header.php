@@ -38,7 +38,7 @@ $lang_toggle = cko_get_language_toggle();
 				?>
 			</nav>
 			<a class="language-toggle" href="<?php echo esc_url( $lang_toggle['url'] ); ?>" aria-label="<?php echo esc_attr( sprintf( 'Switch language to %s', $lang_toggle['target'] ) ); ?>">
-				<span class="language-toggle__current"><?php echo esc_html( $lang_toggle['current'] ); ?></span>
+				<span class="language-toggle__current is-active" aria-current="true"><?php echo esc_html( $lang_toggle['current'] ); ?></span>
 				<span class="language-toggle__target"><?php echo esc_html( $lang_toggle['target'] ); ?></span>
 			</a>
 		</div>
@@ -65,8 +65,8 @@ $lang_toggle = cko_get_language_toggle();
 		);
 		?>
 	</nav>
-	<a class="language-toggle mobile-language-toggle" href="<?php echo esc_url( $lang_toggle['url'] ); ?>">
-		<span class="language-toggle__current"><?php echo esc_html( $lang_toggle['current'] ); ?></span>
+	<a class="language-toggle mobile-language-toggle" href="<?php echo esc_url( $lang_toggle['url'] ); ?>" aria-label="<?php echo esc_attr( sprintf( 'Switch language to %s', $lang_toggle['target'] ) ); ?>">
+		<span class="language-toggle__current is-active" aria-current="true"><?php echo esc_html( $lang_toggle['current'] ); ?></span>
 		<span class="language-toggle__target"><?php echo esc_html( $lang_toggle['target'] ); ?></span>
 	</a>
 </aside>
