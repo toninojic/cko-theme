@@ -1,0 +1,255 @@
+.about-post-loop-list {
+	margin: 50px 0;
+}
+
+.post-wrapper {
+	margin: 34px auto 46px;
+
+	.post-container {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: start;
+		gap: 24px;
+
+		@media screen and (max-width: 480px) {
+			justify-content: center;
+			gap: 16px;
+		}
+
+		.post-card {
+			width: calc(33.33% - 30px);
+			margin-bottom: 0;
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			background: #fff;
+			overflow: hidden;
+			border-radius: 14px;
+			border: 1px solid rgba(0, 0, 0, 0.08);
+			box-shadow: 0 16px 40px rgba(0, 0, 0, .08);
+			transform-origin: center;
+			transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+
+			&:hover {
+				transform: translateY(-8px);
+				box-shadow: 0 28px 55px rgba(0, 0, 0, .16);
+				border-color: rgba(255, 76, 5, 0.32);
+			}
+
+			@media screen and (max-width: 1200px) {
+				height: 420px;
+			}
+
+			@media screen and (max-width: 768px) {
+				width: calc(50% - 14px);
+			}
+
+			@media screen and (max-width: 480px) {
+				width: 100%;
+				height: auto;
+			}
+
+			&-description {
+				padding: 16px;
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+
+				h3 {
+					color: $color-2;
+					margin: 0;
+					line-height: 1.2;
+					font-size: 28px;
+
+					@media screen and (max-width: 1200px) {
+						font-size: 24px;
+					}
+					@media (min-width: 600px) and (max-width: 1200px) {
+						font-size: 18px;
+					}
+				}
+
+				.post-card-title-link {
+					text-decoration: none;
+				}
+
+				.post-card-meta,
+				.post-card-author {
+					font-size: 12px;
+					letter-spacing: .08em;
+					text-transform: uppercase;
+					color: rgba(0, 0, 0, 0.55);
+					font-weight: 600;
+				}
+
+				p {
+					margin: 0;
+					color: rgba(0, 0, 0, 0.78);
+					display: -webkit-box;
+					-webkit-line-clamp: 3;
+					-webkit-box-orient: vertical;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					line-height: 1.45;
+					font-size: 16px;
+					@media (min-width: 600px) and (max-width: 1200px) {
+						font-size: 12px;
+					}
+				}
+			}
+
+			&-img {
+				position: relative;
+
+				&-link {
+					display: block;
+					width: 100%;
+					height: 250px;
+					overflow: hidden;
+					transition: .5s;
+
+					@media screen and (max-width: 1200px) {
+						height: 210px;
+					}
+
+					&:hover {
+						&::before {
+							background: rgba(0, 0, 0, 0.08);
+						}
+
+						img {
+							transform: scale(1.08);
+						}
+					}
+
+					&::before {
+						transition: .5s;
+						content: '';
+						z-index: 10;
+						position: absolute;
+						width: 100%;
+						height: 100%;
+						background: linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(71, 46, 87, 0.22) 100%);
+					}
+
+					img {
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+						transition: .45s;
+					}
+				}
+			}
+		}
+	}
+
+	&--stacked {
+		.post-container {
+			.post-card {
+				width: 100%;
+				height: auto;
+
+				.post-card-img-link {
+					height: 360px;
+				}
+			}
+		}
+	}
+
+	&--featured {
+		.post-container {
+			display: block;
+		}
+
+		.featured-hero {
+			display: grid;
+			grid-template-columns: 1fr 2fr 1fr;
+			gap: 24px;
+			align-items: stretch;
+
+			@media screen and (max-width: 992px) {
+				grid-template-columns: 1fr;
+			}
+		}
+
+		.featured-side,
+		.featured-main {
+			.post-card {
+				width: 100%;
+			}
+		}
+
+		.featured-side {
+			.post-card {
+				height: 100%;
+				min-height: 470px;
+
+				.post-card-img-link {
+					height: 250px;
+				}
+			}
+		}
+
+		.featured-main {
+			.post-card {
+				height: 100%;
+				min-height: 620px;
+
+				.post-card-img-link {
+					height: 420px;
+				}
+			}
+		}
+
+		.featured-more {
+			margin-top: 28px;
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 24px;
+
+			@media screen and (max-width: 992px) {
+				grid-template-columns: 1fr;
+			}
+
+			.post-card {
+				width: 100%;
+				height: 420px;
+			}
+		}
+	}
+
+	&--swiper {
+		.post-container {
+			display: block;
+			overflow: hidden;
+			padding: 10px 0 35px;
+
+			.swiper-slide {
+				height: auto;
+			}
+
+			.post-card {
+				width: 100%;
+				margin-bottom: 0;
+				height: 600px;
+			}
+
+			.swiper-pagination-bullet {
+				background: rgba(0, 0, 0, 0.25);
+			}
+
+			.swiper-pagination-bullet-active {
+				background: $color-2;
+			}
+		}
+	}
+}
+
+
+.post-wrapper--default .post-card:nth-child(odd) {
+	transition-delay: .04s;
+}
+
+.post-wrapper--default .post-card:nth-child(even) {
+	transition-delay: .08s;
+}
