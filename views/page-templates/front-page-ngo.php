@@ -9,29 +9,16 @@
 
 $front = isset( $args['front'] ) ? $args['front'] : array();
 
-$impact_items = array();
-if ( ! empty( $front['impact_items_raw'] ) ) {
-	$lines = preg_split( '/\r\n|\r|\n/', (string) $front['impact_items_raw'] );
-	foreach ( $lines as $line ) {
-		$parts = array_map( 'trim', explode( '|', $line ) );
-		if ( 2 <= count( $parts ) ) {
-			$impact_items[] = array( 'value' => $parts[0], 'label' => $parts[1] );
-		}
-	}
-}
+$impact_items = ! empty( $front['impact_items'] ) && is_array( $front['impact_items'] ) ? $front['impact_items'] : array();
 
 if ( empty( $impact_items ) ) {
-	$impact_items = array(
-		array( 'value' => '120+', 'label' => __( 'Podržanih zajednica', 'cko-theme' ) ),
-		array( 'value' => '35', 'label' => __( 'Aktivnih projekata', 'cko-theme' ) ),
-		array( 'value' => '18', 'label' => __( 'Partner organizacija', 'cko-theme' ) ),
-	);
+	$impact_items = array();
 }
 ?>
 <section class="hero-section reveal" style="<?php echo ! empty( $front['hero_image'] ) ? esc_attr( 'background-image:url(' . $front['hero_image'] . ');' ) : ''; ?>">
 	<div class="hero-overlay"></div>
 	<div class="container hero-content">
-		<p class="hero-kicker"><?php esc_html_e( 'Community • Impact • Action', 'cko-theme' ); ?></p>
+		<p class="hero-kicker"><?php echo esc_html( $front['hero_kicker'] ); ?></p>
 		<h1><?php echo esc_html( $front['hero_title'] ); ?></h1>
 		<p class="hero-text"><?php echo esc_html( $front['hero_text'] ); ?></p>
 		<a class="hero-cta" href="<?php echo esc_url( $front['hero_cta_url'] ); ?>"><?php echo esc_html( $front['hero_cta_text'] ); ?></a>
@@ -44,8 +31,16 @@ if ( empty( $impact_items ) ) {
 		<div class="impact-grid">
 			<?php foreach ( $impact_items as $item ) : ?>
 				<article class="impact-card card">
-					<strong><?php echo esc_html( $item['value'] ); ?></strong>
-					<span><?php echo esc_html( $item['label'] ); ?></span>
+					<?php if ( ! empty( $item['icon'] ) ) : ?>
+						<img src="<?php echo esc_url( $item['icon'] ); ?>" alt="" loading="lazy" />
+					<?php endif; ?>
+					<?php if ( ! empty( $item['title'] ) ) : ?>
+						<h3><?php echo esc_html( $item['title'] ); ?></h3>
+					<?php endif; ?>
+					<strong><?php echo esc_html( isset( $item['value'] ) ? $item['value'] : '' ); ?></strong>
+					<?php if ( ! empty( $item['description'] ) ) : ?>
+						<span><?php echo esc_html( $item['description'] ); ?></span>
+					<?php endif; ?>
 				</article>
 			<?php endforeach; ?>
 		</div>
@@ -64,16 +59,16 @@ if ( empty( $impact_items ) ) {
 
 <section class="container recent-news-section reveal">
 	<div class="section-heading-row">
-		<h2><?php esc_html_e( 'Recent News', 'cko-theme' ); ?></h2>
-		<a href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ); ?>"><?php esc_html_e( 'See all', 'cko-theme' ); ?></a>
+		<h2><?php echo esc_html( $front['recent_news_title'] ); ?></h2>
+		<a href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ); ?>"><?php echo esc_html( $front['recent_news_link_text'] ); ?></a>
 	</div>
 	<?php echo do_shortcode( '[cko_latest_news posts_per_page="6"]' ); ?>
 </section>
 
 <section class="container cta-band reveal">
 	<div class="cta-band__inner">
-		<h2><?php esc_html_e( 'Podržite naš rad', 'cko-theme' ); ?></h2>
-		<p><?php esc_html_e( 'Pridružite se zajednici koja gradi održive promene.', 'cko-theme' ); ?></p>
-		<a class="hero-cta" href="#kontakt"><?php esc_html_e( 'Kontaktirajte nas', 'cko-theme' ); ?></a>
+		<h2><?php echo esc_html( $front['cta_title'] ); ?></h2>
+		<p><?php echo esc_html( $front['cta_text'] ); ?></p>
+		<a class="hero-cta" href="<?php echo esc_url( $front['cta_button_url'] ); ?>"><?php echo esc_html( $front['cta_button_text'] ); ?></a>
 	</div>
 </section>

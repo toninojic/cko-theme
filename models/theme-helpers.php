@@ -19,6 +19,65 @@ if ( ! function_exists( 'cko_primary_menu_fallback' ) ) {
 	}
 }
 
+if ( ! function_exists( 'cko_get_page_language' ) ) {
+	/**
+	 * Determine page language (sr/en).
+	 *
+	 * @param int $page_id Page ID.
+	 * @return string
+	 */
+	function cko_get_page_language( $page_id ) {
+		$meta_language = (string) get_post_meta( $page_id, 'cko_page_language', true );
+		if ( in_array( $meta_language, array( 'sr', 'en' ), true ) ) {
+			return $meta_language;
+		}
+
+		$alt_page_id = absint( get_post_meta( $page_id, 'cko_alt_lang_page_id', true ) );
+		if ( $alt_page_id ) {
+			$alt_language = (string) get_post_meta( $alt_page_id, 'cko_page_language', true );
+			if ( 'sr' === $alt_language ) {
+				return 'en';
+			}
+			if ( 'en' === $alt_language ) {
+				return 'sr';
+			}
+		}
+
+		$linked_page = get_posts(
+			array(
+				'post_type'      => 'page',
+				'posts_per_page' => 1,
+				'post_status'    => array( 'publish', 'draft', 'private' ),
+				'meta_query'     => array(
+					array(
+						'key'   => 'cko_alt_lang_page_id',
+						'value' => $page_id,
+					),
+				),
+			)
+		);
+
+		if ( ! empty( $linked_page ) ) {
+			$linked_language = (string) get_post_meta( $linked_page[0]->ID, 'cko_page_language', true );
+			if ( 'sr' === $linked_language ) {
+				return 'en';
+			}
+			if ( 'en' === $linked_language ) {
+				return 'sr';
+			}
+		}
+
+		$slug       = (string) get_post_field( 'post_name', $page_id );
+		$template   = (string) get_page_template_slug( $page_id );
+		$slug_is_en = 'english' === $slug || false !== strpos( $slug, '-en' );
+		if ( 'template-english.php' === $template || $slug_is_en ) {
+			return 'en';
+		}
+
+		return 'sr';
+	}
+}
+
 if ( ! function_exists( 'cko_is_english_context' ) ) {
 	/**
 	 * Detect if current context is English variant.
@@ -27,47 +86,19 @@ if ( ! function_exists( 'cko_is_english_context' ) ) {
 	 */
 	function cko_is_english_context() {
 		if ( is_page() ) {
-			$slug            = (string) get_post_field( 'post_name', get_queried_object_id() );
-			$is_english_slug = false !== strpos( $slug, 'english' ) || '-en' === substr( $slug, -3 );
-			if ( $is_english_slug ) {
-				return true;
-			}
+			return 'en' === cko_get_page_language( get_queried_object_id() );
 		}
 
 		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
-		return 0 === strpos( trim( $request_uri, '/' ), 'en/' );
-	}
-}
+		$path        = trim( (string) wp_parse_url( $request_uri, PHP_URL_PATH ), '/' );
 
-if ( ! function_exists( 'cko_guess_alt_language_page_id' ) ) {
-	/**
-	 * Try guessing opposite language page by slug convention.
-	 *
-	 * @param int  $page_id Page id.
-	 * @param bool $is_en Current language context.
-	 * @return int
-	 */
-	function cko_guess_alt_language_page_id( $page_id, $is_en ) {
-		$slug = (string) get_post_field( 'post_name', $page_id );
-		if ( ! $slug ) {
-			return 0;
-		}
-
-		$target_slug = $is_en ? preg_replace( '/-en$/', '', $slug ) : $slug . '-en';
-		if ( ! $target_slug ) {
-			return 0;
-		}
-
-		$target_page = get_page_by_path( $target_slug );
-		return $target_page instanceof WP_Post ? (int) $target_page->ID : 0;
+		return 'en' === $path || 0 === strpos( $path, 'en/' ) || 'english' === $path || 0 === strpos( $path, 'english/' );
 	}
 }
 
 if ( ! function_exists( 'cko_get_language_toggle' ) ) {
 	/**
 	 * Build language switch data.
-	 *
-	 * Uses page custom field `cko_alt_lang_page_id` (recommended) and slug fallback.
 	 *
 	 * @return array{current:string,target:string,url:string}
 	 */
@@ -80,11 +111,14 @@ if ( ! function_exists( 'cko_get_language_toggle' ) ) {
 		if ( is_page() ) {
 			$page_id     = get_queried_object_id();
 			$alt_page_id = absint( get_post_meta( $page_id, 'cko_alt_lang_page_id', true ) );
-			if ( ! $alt_page_id ) {
-				$alt_page_id = cko_guess_alt_language_page_id( $page_id, $is_en );
-			}
-			if ( $alt_page_id ) {
-				$url = get_permalink( $alt_page_id );
+
+			if ( $alt_page_id && 'page' === get_post_type( $alt_page_id ) ) {
+				$alt_url = get_permalink( $alt_page_id );
+				if ( $alt_url ) {
+					$url = $alt_url;
+				}
+			} else {
+				$url = get_permalink( $page_id );
 			}
 		}
 

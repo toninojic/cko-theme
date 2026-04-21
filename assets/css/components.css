@@ -26,27 +26,53 @@
 }
 
 .language-toggle {
+    --toggle-padding: 3px;
+    --toggle-knob-width: calc(50% - var(--toggle-padding));
+    position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.28rem 0.45rem;
+    justify-content: space-between;
+    width: 74px;
+    padding: var(--toggle-padding);
     border: 1px solid rgba(71, 46, 87, 0.22);
     border-radius: 999px;
     background: #fff;
     color: var(--accent-color);
-    font-weight: 600;
-    font-size: 0.78rem;
+    font-weight: 700;
+    font-size: 0.74rem;
+    overflow: hidden;
+    transition: border-color 0.22s ease, box-shadow 0.22s ease;
 }
 
-.language-toggle__current {
-    opacity: 0.65;
-}
-
-.language-toggle__target {
-    background: var(--primary-color);
-    color: #fff;
+.language-toggle::before {
+    content: "";
+    position: absolute;
+    top: var(--toggle-padding);
+    left: var(--toggle-padding);
+    width: var(--toggle-knob-width);
+    bottom: var(--toggle-padding);
     border-radius: 999px;
-    padding: 0.12rem 0.38rem;
+    background: var(--primary-color);
+    transition: transform 0.24s ease;
+}
+
+.language-toggle.is-en::before {
+    transform: translateX(100%);
+}
+
+.language-toggle__option {
+    position: relative;
+    z-index: 1;
+    width: 50%;
+    text-align: center;
+    line-height: 1.7;
+    color: rgba(71, 46, 87, 0.72);
+    transition: color 0.24s ease;
+}
+
+.language-toggle.is-sr .language-toggle__option--sr,
+.language-toggle.is-en .language-toggle__option--en {
+    color: #fff;
 }
 
 .menu {
@@ -267,17 +293,20 @@
 .hero-cta {
     display: inline-flex;
     margin-top: 1rem;
-    background: var(--primary-color);
+    background: linear-gradient(135deg, #6b4dd8 0%, #8f5cff 45%, #37b5ff 100%);
+    background-size: 160% 160%;
     color: #fff;
     padding: 0.8rem 1.15rem;
     border-radius: 12px;
     font-weight: 600;
-    transition: transform var(--transition-base), background var(--transition-base);
+    box-shadow: 0 10px 24px rgba(73, 48, 134, 0.26);
+    transition: transform var(--transition-base), box-shadow var(--transition-base), background-position 0.35s ease;
 }
 
 .hero-cta:hover {
     transform: translateY(-2px);
-    background: var(--accent-color);
+    box-shadow: 0 14px 28px rgba(73, 48, 134, 0.34);
+    background-position: 100% 50%;
 }
 
 .impact-section {
