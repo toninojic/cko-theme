@@ -1,74 +1,79 @@
 # CKO Theme Boilerplate
 
-Modern WordPress theme boilerplate sa čistom podelom Page/Blog logike, modularnim CSS/JS i SR/EN osnovom.
+Modern NGO/nonprofit-ready WordPress boilerplate sa modularnom arhitekturom, modernim UI/UX i fleksibilnim sadržajem.
 
-## Ključne funkcionalnosti
+## Šta je unapređeno
 
-- **Custom logo support** (WordPress standard).
-- **Page sadržaj iz editora** za O nama / Underground / Kontakt.
-- **Blog listing** samo kroz `home.php` / `archive.php`.
-- **Shortcode** `[cko_latest_news]` sa 6 latest post kartica + **Load More (AJAX)**.
-- **Automatska anchor navigacija** na stranicama `o-nama` i `underground` (na osnovu `h2` naslova u sadržaju).
-- **SR/EN toggle** sa logikom povezivanja stranica.
+- **Modernizovan mobilni hamburger meni** (animacija u X, overlay panel, lock scroll, jasno close dugme).
+- **Front page NGO struktura**: hero, impact blok, sadržaj sekcije, recent news, CTA band.
+- **`[cko_latest_news]` shortcode**: 6 latest postova, profesionalne kartice, responsive grid (3/2/1), AJAX Load More.
+- **Footer widget oblasti** (3 kolone) za tekst, linkove, kontakt i društvene mreže.
+- **SR/EN toggle** sa mapiranjem preko `cko_alt_lang_page_id` + slug fallback.
 
-## Template hijerarhija
+## Front page struktura i sadržaj
 
-- `front-page.php` => prikazuje sadržaj statične početne stranice (`the_content`).
-- `page.php` => obične statične stranice (`the_content`).
-- `home.php` + `archive.php` => blog/latest posts listing.
-- `single.php` => pojedinačna vest/post.
+`front-page.php` koristi `views/page-templates/front-page-ngo.php` i čita sledeće custom fields sa front page-a:
 
-## Kako koristiti logo
+- `cko_hero_title`
+- `cko_hero_text`
+- `cko_hero_cta_text`
+- `cko_hero_cta_url`
+- `cko_impact_title`
+- `cko_impact_items` (format po liniji: `broj|opis`, npr. `120+|Podržanih zajednica`)
 
-1. Idi u **Appearance → Customize → Site Identity**.
-2. Uploadaj ili promeni logo u polju **Logo**.
-3. Header automatski prikazuje custom logo, a ako nije setovan prikazuje ime sajta.
+Hero slika se uzima iz **Featured Image** front page-a.
 
-## Kako koristiti shortcode za najnovije vesti
+## Kako koristiti shortcode za vesti
 
-U editoru stranice (npr. Vesti) ubaci:
+U editor ubaci:
 
 ```text
 [cko_latest_news]
 ```
 
-Opcioni parametar:
+ili
 
 ```text
 [cko_latest_news posts_per_page="6"]
 ```
 
-Shortcode prikazuje:
+Shortcode prikazuje kartice sa:
 - featured image
 - naslov
 - excerpt
-- link na ceo post
-- Load More dugme (AJAX, bez reload-a cele stranice)
+- link na ceo tekst
+- Load More (AJAX)
 
-## Anchor navigacija (O nama / Underground)
+## Anchor navigacija na O nama i Underground
 
-- U sadržaju stranice koristi `h2` naslove za sekcije (npr. „Ko smo mi?“, „Naša misija“...).
-- Tema automatski pravi internu navigaciju na vrhu sadržaja i linkuje ka tim sekcijama.
-- Radi na slugovima: `o-nama`, `underground` (i EN varijantama sa `-en`).
+Tema automatski generiše anchor navigaciju iz `h2` naslova unetih kroz editor stranice, za slugove:
+- `o-nama`
+- `underground`
+- `o-nama-en`
+- `underground-en`
 
-## SR/EN povezivanje stranica
+## Footer widget zone (tekst, linkovi, social)
 
-Preporučeni način:
+Idi na **Appearance → Widgets** i popuni:
+- `Footer Column 1` (misija/opis)
+- `Footer Column 2` (linkovi/meni)
+- `Footer Column 3` (kontakt + društvene mreže)
 
-1. Napravi SR i EN verziju stranice (npr. `o-nama` i `o-nama-en`).
-2. U svakoj stranici dodaj custom field: `cko_alt_lang_page_id`.
-3. Vrednost je ID odgovarajuće stranice na drugom jeziku.
+Tu možeš dodati tekst, custom HTML, Navigation Menu widget, social linkove itd.
 
-Fallback logika:
-- Ako custom field nije setovan, tema pokušava preko slug konvencije (`-en`).
-- Ako ni to ne postoji, koristi `/english/` ili `/`.
+## SR / EN povezivanje stranica
 
-## Gde se šta menja u administraciji
+Preporuka:
+1. Napravi SR i EN varijante stranica.
+2. U svakoj dodaj custom field `cko_alt_lang_page_id` sa ID-jem suprotne verzije.
 
-- **Pages**: O nama, Underground, Kontakt, English sadržaj.
-- **Posts**: Vesti/blog postovi.
-- **Settings → Reading**:
-  - Homepage (front page)
-  - Posts page (Vesti/blog)
-- **Appearance → Menus**: glavni meni.
+Ako nije postavljeno ručno, tema pokušava slug fallback (`-en`).
+
+## Gde kasnije menjaš sadržaj
+
+- **Pages**: hero tekst, sekcije, O nama, Underground, Kontakt, English.
+- **Posts**: vesti/blog.
+- **Appearance → Menus**: glavni meni (desktop + mobile koriste isti WP meni).
+- **Appearance → Widgets**: footer sadržaj (misija, linkovi, social).
 - **Appearance → Customize → Site Identity**: logo.
+- **Settings → Reading**: front page i posts page.

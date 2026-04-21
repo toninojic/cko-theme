@@ -25,6 +25,7 @@
     const closeMenu = () => {
       menuToggle.classList.remove('is-active');
       menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Open menu');
       mobileDrawer.classList.remove('is-open');
       mobileDrawer.setAttribute('aria-hidden', 'true');
       overlay.classList.remove('is-open');
@@ -34,6 +35,7 @@
     const openMenu = () => {
       menuToggle.classList.add('is-active');
       menuToggle.setAttribute('aria-expanded', 'true');
+      menuToggle.setAttribute('aria-label', 'Close menu');
       mobileDrawer.classList.add('is-open');
       mobileDrawer.setAttribute('aria-hidden', 'false');
       overlay.classList.add('is-open');

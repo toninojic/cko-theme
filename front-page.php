@@ -6,5 +6,5 @@
  */
 
 get_header();
-cko_render_page_content();
+cko_render_front_page();
 get_footer();
